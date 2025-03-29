@@ -1,0 +1,26 @@
+---
+import { ClientRouter } from 'astro:transitions'
+import BaseHead from '../components/BaseHead.astro'
+import Header from '../components/Header.astro'
+import Container from '../components/Container.astro'
+import '@fontsource-variable/rubik'
+import '../styles/global.css'
+
+const { title, description } = Astro.props
+---
+
+<html lang="en">
+    <head>
+        <BaseHead title={title} description={description} />
+        <ClientRouter />
+    </head>
+
+    <body class="bg-stone-50">
+        <Header />
+        <main transition:animate="fade">
+            <Container>
+                <slot />
+            </Container>
+        </main>
+    </body>
+</html>

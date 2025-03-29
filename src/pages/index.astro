@@ -1,0 +1,39 @@
+---
+import Social from '../components/Social.astro'
+import Layout from '../layouts/Main.astro'
+
+import { getCollection } from 'astro:content'
+import BlogPost from '../components/BlogPost.astro'
+import Button from '../components/Button.astro'
+const posts = (await getCollection('blog')).sort(
+    (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+)
+---
+
+<Layout title="Andy Axton" description="Andy Axton's personal website">
+    <div class="grid grid-cols-5 gap-10 items-center mt-12 mb-12">
+        <div class="col-span-2">
+            <img src="me-gen.png" />
+        </div>
+        <div class="col-span-3">
+            <h1 class="text-3xl font-medium mb-4">Hi, I'm Andy Axton</h1>
+            <p class="text-lg leading-relaxed mb-5">
+                I'm a front-end engineer based in Portland, OR. I enjoy building
+                things for the web, and I'm passionate about creating
+                accessible, performant, and user-friendly experiences.
+                <a href="/about"
+                    ><Button variant="secondary" size="sm"
+                        >Learn more about me</Button
+                    ></a
+                >
+            </p>
+            <Social />
+        </div>
+    </div>
+    <section>
+        <h2 class="text-2xl font-medium mb-4">Latest Posts</h2>
+        <div class="grid grid-cols-2 gap-10">
+            {posts.map((post) => <BlogPost post={post} />)}
+        </div>
+    </section>
+</Layout>

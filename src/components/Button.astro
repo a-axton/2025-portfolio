@@ -1,0 +1,47 @@
+---
+interface Props {
+    variant?: 'primary' | 'secondary' | 'outline'
+    size?: 'sm' | 'md' | 'lg'
+    class?: string
+    type?: 'button' | 'submit' | 'reset'
+    disabled?: boolean
+}
+
+const {
+    variant = 'primary',
+    size = 'md',
+    class: className = '',
+    type = 'button',
+    disabled = false,
+} = Astro.props
+
+const variants = {
+    primary:
+        'bg-indigo-500 text-white font-light border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none',
+    secondary:
+        'bg-white text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none',
+    outline:
+        'bg-white text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none',
+}
+
+const sizes = {
+    sm: 'px-3 py-1.5 text-sm font-bold',
+    md: 'px-4 py-2 text-base font-bold',
+    lg: 'px-6 py-3 text-lg font-bold',
+}
+---
+
+<button
+    type={type}
+    disabled={disabled}
+    class:list={[
+        'rounded-md font-mono uppercase transition-all duration-150 ease-in-out active:translate-x-[3px] active:translate-y-[3px] active:shadow-none',
+        variants[variant],
+        sizes[size],
+        disabled &&
+            'opacity-60 cursor-not-allowed hover:translate-x-0 hover:translate-y-0 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]',
+        className,
+    ]}
+>
+    <slot />
+</button>
