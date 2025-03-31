@@ -3,9 +3,58 @@ import Layout from '../layouts/Main.astro'
 ---
 
 <Layout title="About Me" description="About Andy Axton">
-    <div class="max-w-3xl mx-auto">
-        <img class="w-96 h-96" src="hacking.JPG" />
-        <h1 class="text-4xl">Self taught</h1>
-        <p></p>
+    <h1 class="text-4xl mb-6 mt-10 font-medium">About Me</h1>
+    <div class="space-y-4 text-lg leading-relaxed mb-10">
+        <p>
+            I'm a front-end engineer with over 10 years of professional
+            experience building web apps, specializing in React (since the early
+            days) and Next.js for the past five years.
+        </p>
+        <p>
+            My journey started in hackathons, where I met some incredible people
+            and even co-founded a company together. We created Rocket Dept. to
+            help people build MVPs for their startups and to build our own
+            internal products in the IoT space.
+        </p>
+        <p>
+            At MasterClass, I discovered my passion for front-end
+            infrastructure, building libraries, tools, and patterns that help
+            teams move faster and work more efficiently. I love the challenge of
+            solving complex technical problems and scaling codebases to balance
+            speed with maintainability.
+        </p>
+        <p>
+            With a background in graphic design, I enjoy working on polished UIs
+            just as much as optimizing developer workflows. For me, the best
+            projects strike a balance between technical depth and creative
+            expression—and that's what keeps me excited about building for the
+            web.
+        </p>
+    </div>
+    <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-xl md:max-w-none mx-auto mb-16"
+    >
+        <figure>
+            <div class="aspect-[4/3]">
+                <img
+                    src="hacking.JPG"
+                    class="w-full h-full object-cover object-bottom"
+                />
+            </div>
+            <figcaption class="text-sm text-gray-600 text-center mt-2">
+                In my element at Rocket Dept. - Hacking together a laser maze
+                game in a shipping container at TBDfest in Sacramento
+            </figcaption>
+        </figure>
+        <figure>
+            <div class="aspect-[4/3]">
+                <img src="mc-beards.jpg" class="w-full h-full object-cover" />
+            </div>
+            <figcaption class="text-sm text-gray-600 text-center mt-2">
+                My favorite MasterClass moment - After being head-down building
+                the consumer cart the team surprised me in a zoom by having
+                matching beards!
+            </figcaption>
+        </figure>
     </div>
 </Layout>
