@@ -3,15 +3,15 @@ import Layout from '../../layouts/Main.astro'
 import { getCollection } from 'astro:content'
 import BlogPost from '../../components/BlogPost.astro'
 
-const posts = (await getCollection('blog')).sort(
-    (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
-)
+const posts = (await getCollection('blog'))
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
 ---
 
 <Layout>
     <section>
-        <ul>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12">
             {posts.map((post) => <BlogPost post={post} />)}
-        </ul>
+        </div>
     </section>
 </Layout>

@@ -1,11 +1,10 @@
 ---
 title: 'Astro: The Unexpected Hero of My Portfolio (Sorry, Next.js)'
 description: 'When starting a new project, selecting the right tools to use is an important step. Many times we just reach for the most familiar tools.'
-pubDate: 'Jul 01 2022'
-heroImage: '/blog-placeholder-1.jpg'
+pubDate: 'May 23 2025'
+heroImage: '/blog/astro-logo-light-gradient.png'
+heroObjectFit: 'contain'
 ---
-# Astro: The Unexpected Hero of My Portfolio (Sorry, Next.js)
-
 As a front-end engineer, I’ve worked with a variety of frameworks over the years (shout out to Backbone.js as my first framework). One of the first decisions when you start a new project is which framework to use. When I'm starting a new project I usually reach for Next.js but I've had my eye on Astro for some time. While both are great frameworks, Astro stands out as the better choice for many projects—especially if you prioritize simplicity, ease of setup, and optimal performance. Let’s dive into why Astro might be the best framework for your next website.
 
 ## Simplicity at it's Core
@@ -44,7 +43,7 @@ While Next.js does offer static site generation (SSG) for performance benefits, 
 
 While Astro excels at building static and hybrid websites, Next.js remains a great choice for dynamic applications that require server-side rendering, API routes, or extensive backend integration. If you’re developing a large-scale SaaS platform or need complex user authentication and real-time data fetching, Next.js might be a more suitable option.
 
-## Conclusion
+## Wrap-up
 
 If your goal is to build a fast, easy-to-maintain, and high-performance website, Astro is the clear winner over Next.js. Its simplicity, zero JavaScript-by-default philosophy, flexible client-side interactivity, and superior performance make it the ideal framework for content-driven websites. While Next.js is still a fantastic tool for application development, Astro’s approach makes it the smarter choice for many web projects today.
 

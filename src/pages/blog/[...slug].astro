@@ -1,7 +1,7 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content'
 import Layout from '../../layouts/Main.astro'
-
+import FormattedDate from '../../components/FormattedDate.astro'
 export async function getStaticPaths() {
     const posts = await getCollection('blog')
     return posts.map((post) => ({
@@ -17,8 +17,12 @@ const { Content } = await post.render()
 
 <Layout {...post.data}>
     <div
-        class="prose text-lg leading-loose prose-headings:font-medium font-[360]"
+        class="prose text-lg leading-loose prose-headings:font-medium font-[360] mt-12"
     >
+        <h1 class="mb-3">{post.data.title}</h1>
+        <p class="text-sm mt-auto px-2 py-1 border-2 border-black inline-block">
+            <FormattedDate date={post.data.pubDate} />
+        </p>
         <Content />
     </div>
 </Layout>
