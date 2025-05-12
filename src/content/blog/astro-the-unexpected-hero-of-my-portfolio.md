@@ -1,7 +1,7 @@
 ---
 title: 'Astro: The Unexpected Hero of My Portfolio (Sorry, Next.js)'
 description: 'When starting a new project, selecting the right tools to use is an important step. Many times we just reach for the most familiar tools.'
-pubDate: 'May 23 2025'
+pubDate: 'April 23 2025'
 heroImage: '/blog/astro-logo-light-gradient.png'
 heroObjectFit: 'contain'
 ---

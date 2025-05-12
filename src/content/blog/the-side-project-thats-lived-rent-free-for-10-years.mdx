@@ -1,0 +1,105 @@
+---
+title: 'Nodebase: The Side Project Thats Lived Rent Free in My Head for 10 years'
+description: 'When starting a new project, selecting the right tools to use is an important step. Many times we just reach for the most familiar tools.'
+pubDate: 'May 12 2025'
+heroImage: '/blog/flow.png'
+draft: false
+---
+I’m the kind of person who always has a few ideas bouncing around in my head. I’ll catch myself thinking things like, “How would I build this?” or “Would people actually pay for this?” Some ideas disappear as quickly as they came—often before I’ve even finished a shower. But every once in a while, an idea lingers. One of them has stuck with me for nearly a decade, like a polite, long-term roommate.
+
+This particular idea was sparked at a Sacramento hackathon back in December 2013. That weekend, we built a conservation calculator (named Leaflr) that asked people questions about their daily commute routines. At the end, it calculated their carbon footprint and offered tips to cut back. It worked well, and we ended up winning first place. But that wasn’t the idea that stayed with me. At least not directly.
+
+<div className="flex justify-center gap-4">
+  <figure>
+    <img src="/blog/angelhack.jpg" alt="Hackathon participants" />
+    <figcaption>The AngelHack Sacramento 2013 hackathon where it all began</figcaption>
+  </figure>
+  <figure>
+    <img src="/blog/angelhack-wb.jpg" alt="Hackathon participants" />
+    <figcaption>Conservation calculator workflow</figcaption>
+  </figure>
+</div>
+
+While building that calculator, we created a small framework to define surveys and their steps using JSON. It knew which step to show next, handled branching logic, and made the survey flow smoothly. That framework is what stuck with me. It seemed simple at the time, but over the years, as I gained more experience and worked on complex products, the concept kept evolving. I started to see how powerful it could be if it were fully realized.
+
+Surveys were just the starting point. As I thought more about it, I realized the same building blocks could apply to much more: onboarding flows, cancellation paths, multi-step wizards—you name it. Think about something like a subscription checkout flow. It might include login or sign-up, upsell screens, payment, personalization, onboarding, and maybe more depending on the product. Each of those could be a mini flow in itself.
+
+### Compounding Complexity
+
+Most teams can build out these features without much trouble at first. But as the product grows, the flow becomes more complicated. New offerings, pricing models, and experiments all add layers of complexity to what used to be a straightforward path. Eventually, it turns into a tangled web that’s hard to fully understand or modify.
+
+Let’s say you want to test moving the signup step further down the funnel because users are bouncing early. It sounds simple, but making that change could be painful and time-consuming.
+
+And then there’s everyone’s favorite: tech debt 😈. Maybe that old promo or A/B test never got cleaned up. Now your codebase has outdated logic paths that nobody’s sure are still in use. Making updates becomes a guessing game.
+
+### Feature Orchestration
+
+To solve this, I started thinking about a better way—a single source of truth that represents the flow visually, like the diagrams we whiteboard as product teams. But instead of staying on a whiteboard, it connects directly to your codebase. The framework becomes an orchestrator of your user’s journey through the app.
+
+At the core of this system are **steps**. A step could be a question in a survey or a signup screen in a checkout flow. Steps can contain **elements**—like text, multiple choice inputs, or NPS questions. If it’s a custom step, like signup or checkout, it can be left as a blank canvas to be rendered in your app.
+
+Steps connect through **actions**, **conditional logic**, or **default connections**. An action might be a button click. Logic could be based on user attributes or responses to previous elements.
+
+### SDK Implementation
+
+To use this in a real app, you integrate an SDK and choose which flow to run. The CLI tool can even generate TypeScript types based on your flow, so you know exactly which steps and elements to expect. Then, you wire up the UI using a renderer:
+
+```ts
+const renderer = {
+  steps: {
+    signUp: SignUp,
+    signIn: SignIn,
+    checkout: Checkout,
+    onboardingBasic: OnboardingBasic,
+    onboardingPremium: OnboardingPremium,
+  },
+  elements: {
+    text: Text,
+    multi: MultipleChoice,
+  }
+}
+
+<Flow
+  slug='checkout-flow'
+  renderer={renderer}
+  attributes={{
+    laterSignUp: experiments.check('later-sign-up'),
+    newFeature: features.check('new-feature'),
+  }}
+/>
+```
+
+Each step is a component that receives a **flow** object from the SDK, allowing you to control progression and set attributes dynamically:
+
+```tsx
+const SignUp = ({ flow }) => {
+  const handleSubmit = () => {
+    // Signup logic
+    if (res.success) {
+      flow.getNext()
+    }
+  }
+}
+```
+
+```tsx
+const Checkout = ({ flow }) => {
+  const handleCheckout = () => {
+    if (res.success) {
+      flow.setAttribute('subscriptionType', res.subscriptionType)
+      flow.getNext()
+    }
+  }
+}
+```
+
+### Deterministic by Design
+
+The entire flow—including logic—is delivered as JSON and can be fully interpreted client-side. That means you can cache it, run it offline, or even serve it as static content. If you want analytics, experiments, or internal integrations, those can hook in separately.
+
+### Who is Nodebase For?
+
+Nodebase is for teams who want to build rich, multi-step user journeys with full control over their UI and internal tools. Most marketing platforms fall apart when you need custom logic or access to internal data. Flow is different.
+
+It’s not just for surveys. It’s for onboarding, cancellations, feature gating, and anything else that can be modeled as a flow. It's the kind of framework I kept wishing existed—and after 10 years of thinking about it, I’ve finally started building it.
+
