@@ -1,5 +1,6 @@
 ---
 title: 'Nodebase: The Side Project That Lived Rent Free in My Head for 10 Years'
+description: ''
 pubDate: 'May 12 2025'
 heroImage: '/blog/flow.png'
 draft: false
@@ -21,7 +22,11 @@ This particular idea was sparked at a Sacramento hackathon back in December 2013
 
 While building that calculator, we created a small framework to define surveys and their steps using JSON. It knew which step to show next, handled branching logic, and made the survey flow smoothly. That framework is what stuck with me. It seemed simple at the time, but over the years, as I gained more experience and worked on complex products, the concept kept evolving. I started to see how powerful it could be if it were fully realized.
 
-Surveys were just the starting point. As I thought more about it, I realized the same building blocks could apply to much more: onboarding flows, cancellation paths, multi-step wizards—you name it. Think about something like a subscription checkout flow. It might include login or sign-up, upsell screens, payment, personalization, onboarding, and maybe more depending on the product. Each of those could be a mini flow in itself.
+#### Beyond Surveys
+
+Surveys were just the starting point. As I thought more about it, I realized the same building blocks could apply to much more: onboarding flows, cancellation paths, checkout flows, multi-step wizards—you name it. Think about something like a subscription checkout flow. It might include login or sign up, upsell screens, payment, personalization, onboarding, and maybe more depending on the product. Each of those are just a single step in a larger checkout flow.
+
+Taking it one level further a checkout flow is only a single step in a sales funnel. The framework could help you build, modify and change the order of each step of your sales funnel.
 
 ### Compounding Complexity
 
@@ -39,19 +44,31 @@ At the core of this system are **steps**. A step could be a question in a survey
 
 Steps connect through **actions**, **conditional logic**, or **default connections**. An action might be a button click. Logic could be based on user attributes or responses to previous elements.
 
+### Building the Flow
+
+Using our checkout flow example, let's add it to the Nodebase app as a visual workflow. **Later Sign Up** and **Subscription Type** are both decider nodes which run logic automatically when encountered in the flow to send users to the proper step. The rest are custom steps which we will need to connect to the UI in our app.
+
+<figure className='text-center border p-4 -ml-4 rounded-sm'>
+  <img src="/blog/workflow.png" alt="Subscription checkout flow" />
+  <figcaption>Our subscription checkout flow built in the Nodebase app</figcaption>
+</figure>
+
+It's a simple example and you may be thinking Nodebase might not be needed but remember that flows grow in complexity over time. What if there were a few more A/B tests, steps, or feature flips present? It gets complicated quickly.
+
 ### SDK Implementation
 
-To use this in a real app, you integrate an SDK and choose which flow to run. The CLI tool can even generate TypeScript types based on your flow, so you know exactly which steps and elements to expect. Then, you wire up the UI using a renderer:
+After the flow has been designed in the whiteboarding app you can add it to your codebase with the SDKs. The CLI tool can even generate TypeScript types based on your flow, so you know exactly which steps and elements to expect. Then, you wire up the UI using a renderer which will tell the framework what to render for each step or element.
 
 ```ts
 const renderer = {
   steps: {
     signUp: SignUp,
-    signIn: SignIn,
     checkout: Checkout,
     onboardingBasic: OnboardingBasic,
     onboardingPremium: OnboardingPremium,
   },
+  // We aren't using elements in this flow but if we added
+  // a survey to our onboarding steps it might look like this
   elements: {
     text: Text,
     multi: MultipleChoice,
@@ -62,8 +79,8 @@ const renderer = {
   slug='checkout-flow'
   renderer={renderer}
   attributes={{
+    // attributes can be used in step logic
     laterSignUp: experiments.check('later-sign-up'),
-    newFeature: features.check('new-feature'),
   }}
 />
 ```
